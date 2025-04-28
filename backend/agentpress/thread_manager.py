@@ -13,6 +13,7 @@ This module provides comprehensive conversation management, including:
 import json
 from typing import List, Dict, Any, Optional, Type, Union, AsyncGenerator, Literal
 from services.llm import make_llm_api_call
+from utils.llm_config import get_model_real_name
 from agentpress.tool import Tool
 from agentpress.tool_registry import ToolRegistry
 from agentpress.context_manager import ContextManager
