@@ -100,8 +100,8 @@ export function Navbar() {
   const toggleDrawer = () => setIsDrawerOpen((prev) => !prev);
   const handleOverlayClick = () => setIsDrawerOpen(false);
 
-  const logoSrc = !mounted ? "/kortix-logo.svg" : 
-    (resolvedTheme === "dark" ? "/kortix-logo-white.svg" : "/kortix-logo.svg");
+  const logoSrc = !mounted ? "/logo.png" : 
+    (resolvedTheme === "dark" ? "/logo.png" : "/logo.png");
 
   return (
     <header
@@ -140,7 +140,7 @@ export function Navbar() {
               <div className="flex items-center space-x-3">
 
                 {/* <Link
-                  href="https://github.com/kortix-ai/suna"
+                  href="https://github.com/gamebyte-ai/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hidden md:flex items-center justify-center h-8 px-3 text-sm font-normal tracking-wide rounded-full text-primary hover:text-primary/80 transition-colors"

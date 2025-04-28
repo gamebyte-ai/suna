@@ -29,7 +29,7 @@ export const Highlight = ({
 export const BLUR_FADE_DELAY = 0.15;
 
 export const siteConfig = {
-  name: "Kortix Suna",
+  name: "GameByte",
   description: "The Generalist AI Agent that can act on your behalf.",
   cta: "Hire Suna",
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
@@ -41,9 +41,9 @@ export const siteConfig = {
   ],
   links: {
     email: "support@kortix.ai",
-    twitter: "https://x.com/kortixai",
+    twitter: "https://x.com/gamebyte_ai",
     discord: "https://discord.gg/kortixai",
-    github: "https://github.com/Kortix-ai/Suna",
+    github: "https://github.com/gamebyte-ai/",
     instagram: "https://instagram.com/kortixai",
   },
   nav: {
@@ -70,7 +70,7 @@ export const siteConfig = {
       </svg>
     ),
     badge: "100% OPEN SOURCE",
-    githubUrl: "https://github.com/kortix-ai/suna",
+    githubUrl: "https://github.com/gamebyte-ai/",
     title: "Suna, the AI Employee.",
     description: "Suna by Kortix – is a generalist AI Agent that acts on your behalf.",
     inputPlaceholder: "Ask Suna to...",
@@ -331,15 +331,15 @@ export const siteConfig = {
     ],
   },
   featureSection: {
-    title: "How Kortix Suna Works",
+    title: "How GameByte Works",
     description:
-      "Discover how Kortix Suna transforms your commands into action in four easy steps",
+      "Discover how GameByte transforms your commands into action in four easy steps",
     items: [
       {
         id: 1,
         title: "Request an Action",
         content:
-          "Speak or type your command—let Kortix Suna capture your intent. Your request instantly sets the process in motion.",
+          "Speak or type your command—let GameByte capture your intent. Your request instantly sets the process in motion.",
         image:
           "https://images.unsplash.com/photo-1720371300677-ba4838fa0678?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
@@ -370,9 +370,9 @@ export const siteConfig = {
     ],
   },
   bentoSection: {
-    title: "Empower Your Workflow with Kortix Suna",
+    title: "Empower Your Workflow with GameByte",
     description:
-      "Let Kortix Suna act on your behalf with advanced AI capabilities, seamless integrations, and autonomous task execution.",
+      "Let GameByte act on your behalf with advanced AI capabilities, seamless integrations, and autonomous task execution.",
     items: [
       {
         id: 1,
@@ -736,7 +736,7 @@ export const siteConfig = {
   },
   quoteSection: {
     quote:
-      "Kortix Suna has transformed how we approach everyday tasks. The level of automation it provides, combined with its open source nature, makes it an invaluable tool for our entire organization.",
+      "GameByte has transformed how we approach everyday tasks. The level of automation it provides, combined with its open source nature, makes it an invaluable tool for our entire organization.",
     author: {
       name: "Alex Johnson",
       role: "CTO, Innovatech",
@@ -746,7 +746,7 @@ export const siteConfig = {
   pricing: {
     title: "Open Source & Free Forever",
     description:
-      "Kortix Suna is 100% open source and free to use. No hidden fees, no premium features locked behind paywalls.",
+      "GameByte is 100% open source and free to use. No hidden fees, no premium features locked behind paywalls.",
     pricingItems: [
       {
         name: "Community",
@@ -1011,7 +1011,7 @@ export const siteConfig = {
   faqSection: {
     title: "Frequently Asked Questions",
     description:
-      "Answers to common questions about Kortix Suna and its capabilities. If you have any other questions, please don't hesitate to contact us.",
+      "Answers to common questions about GameByte and its capabilities. If you have any other questions, please don't hesitate to contact us.",
     faQitems: [
       {
         id: 1,
@@ -1021,39 +1021,39 @@ export const siteConfig = {
       },
       {
         id: 2,
-        question: "How does Kortix Suna work?",
+        question: "How does GameByte work?",
         answer:
-          "Kortix Suna works by analyzing your requirements, leveraging advanced AI algorithms to understand context, and executing tasks based on your instructions. It can integrate with your workflow, learn from feedback, and continuously improve its performance.",
+          "GameByte works by analyzing your requirements, leveraging advanced AI algorithms to understand context, and executing tasks based on your instructions. It can integrate with your workflow, learn from feedback, and continuously improve its performance.",
       },
       {
         id: 3,
-        question: "Is Kortix Suna really free?",
+        question: "Is GameByte really free?",
         answer:
-          "Yes, Kortix Suna is completely free and open source. We believe in democratizing AI technology and making it accessible to everyone. You can use it, modify it, and contribute to its development without any cost.",
+          "Yes, GameByte is completely free and open source. We believe in democratizing AI technology and making it accessible to everyone. You can use it, modify it, and contribute to its development without any cost.",
       },
       {
         id: 4,
         question: "Can I integrate Suna with my existing tools?",
         answer:
-          "Yes, Kortix Suna is designed to be highly compatible with popular tools and platforms. We offer APIs and pre-built integrations for seamless connection with your existing workflow tools and systems.",
+          "Yes, GameByte is designed to be highly compatible with popular tools and platforms. We offer APIs and pre-built integrations for seamless connection with your existing workflow tools and systems.",
       },
       {
         id: 5,
-        question: "How can I contribute to Kortix Suna?",
+        question: "How can I contribute to GameByte?",
         answer:
-          "You can contribute to Kortix Suna by submitting pull requests on GitHub, reporting bugs, suggesting new features, or helping with documentation. Join our Discord community to connect with other contributors and Hire Suna.",
+          "You can contribute to GameByte by submitting pull requests on GitHub, reporting bugs, suggesting new features, or helping with documentation. Join our Discord community to connect with other contributors and Hire Suna.",
       },
       {
         id: 6,
-        question: "How does Kortix Suna save me time?",
+        question: "How does GameByte save me time?",
         answer:
-          "Kortix Suna automates repetitive tasks, streamlines workflows, and provides quick solutions to common challenges. This automation and efficiency can save hours of manual work, allowing you to focus on more strategic activities.",
+          "GameByte automates repetitive tasks, streamlines workflows, and provides quick solutions to common challenges. This automation and efficiency can save hours of manual work, allowing you to focus on more strategic activities.",
       },
     ],
   },
   ctaSection: {
     id: "cta",
-    title: "Start Using Kortix Suna Today",
+    title: "Start Using GameByte Today",
     backgroundImage: "/holo.png",
     button: {
       text: "Hire Suna today",
@@ -1073,17 +1073,17 @@ export const siteConfig = {
     {
       title: "Resources",
       links: [
-        { id: 5, title: "Documentation", url: "https://github.com/Kortix-ai/Suna" },
+        { id: 5, title: "Documentation", url: "https://github.com/gamebyte-ai/" },
         { id: 7, title: "Discord", url: "https://discord.gg/Py6pCBUUPw" },
-        { id: 8, title: "GitHub", url: "https://github.com/Kortix-ai/Suna" },
+        { id: 8, title: "GitHub", url: "https://github.com/gamebyte-ai/" },
       ],
     },
     {
       title: "Legal",
       links: [
-        { id: 9, title: "Privacy Policy", url: "https://suna.so/legal?tab=privacy" },
-        { id: 10, title: "Terms of Service", url: "https://suna.so/legal?tab=terms" },
-        { id: 11, title: "License Apache 2.0", url: "https://github.com/Kortix-ai/Suna/blob/main/LICENSE" },
+        { id: 9, title: "Privacy Policy", url: "https://gamebyte.ai/legal?tab=privacy" },
+        { id: 10, title: "Terms of Service", url: "https://gamebyte.ai/legal?tab=terms" },
+        { id: 11, title: "License Apache 2.0", url: "https://github.com/gamebyte-ai//blob/main/LICENSE" },
       ],
     },
   ],

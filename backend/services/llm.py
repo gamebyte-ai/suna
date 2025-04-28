@@ -18,6 +18,7 @@ from openai import OpenAIError
 import litellm
 from utils.logger import logger
 from utils.config import config
+from utils.llm_config import get_llm_provider_config, get_model_real_name
 from datetime import datetime
 import traceback
 
@@ -89,9 +90,29 @@ def prepare_params(
     enable_thinking: Optional[bool] = False,
     reasoning_effort: Optional[str] = 'low'
 ) -> Dict[str, Any]:
+    """
+    Hazırlanan parametrelerde model adı ve sağlayıcı bilgisi merkezi yapıdan alınır.
+    """
+    # Model alias'ı varsa gerçek model adına çevir
+    real_model_name = get_model_real_name(model_name)
+    provider = None
+    for prov, cfg in get_llm_provider_config.__globals__["LLM_PROVIDERS"].items():
+        if real_model_name.startswith(cfg["default_model"].split("/")[0]) or prov in real_model_name:
+            provider = prov
+            break
+    provider_cfg = get_llm_provider_config(provider) if provider else None
+    # Eğer api_key/api_base parametre olarak verilmemişse merkezi yapıdan al
+    if provider_cfg:
+        if not api_key:
+            api_key = provider_cfg.get("api_key")
+        if not api_base:
+            api_base = provider_cfg.get("endpoint")
+    model_name = real_model_name
+
     """Prepare parameters for the API call."""
     params = {
-        "model": model_name,
+        "model": model_name,  # Artık alias değil gerçek model adı
+
         "messages": messages,
         "temperature": temperature,
         "response_format": response_format,
@@ -239,6 +260,45 @@ def prepare_params(
     return params
 
 async def make_llm_api_call(
+    messages: List[Dict[str, Any]],
+    model_name: str,
+    response_format: Optional[Any] = None,
+    temperature: float = 0,
+    max_tokens: Optional[int] = None,
+    tools: Optional[List[Dict[str, Any]]] = None,
+    tool_choice: str = "auto",
+    api_key: Optional[str] = None,
+    api_base: Optional[str] = None,
+    stream: bool = False,
+    top_p: Optional[float] = None,
+    model_id: Optional[str] = None,
+    enable_thinking: Optional[bool] = False,
+    reasoning_effort: Optional[str] = 'low'
+) -> Union[Dict[str, Any], AsyncGenerator]:
+    """
+    model_name parametresi alias olabilir, gerçek modele çevrilir ve merkezi yapıdan provider bilgisi alınır.
+    """
+    # Model alias'ını gerçek model adına çevir
+    real_model_name = get_model_real_name(model_name)
+    return await _make_llm_api_call_internal(
+        messages=messages,
+        model_name=real_model_name,
+        response_format=response_format,
+        temperature=temperature,
+        max_tokens=max_tokens,
+        tools=tools,
+        tool_choice=tool_choice,
+        api_key=api_key,
+        api_base=api_base,
+        stream=stream,
+        top_p=top_p,
+        model_id=model_id,
+        enable_thinking=enable_thinking,
+        reasoning_effort=reasoning_effort
+    )
+
+# Eski fonksiyonun içeriğini _make_llm_api_call_internal olarak taşıdık, backward compatibility için alias fonksiyon kullandık.
+async def _make_llm_api_call_internal(
     messages: List[Dict[str, Any]],
     model_name: str,
     response_format: Optional[Any] = None,

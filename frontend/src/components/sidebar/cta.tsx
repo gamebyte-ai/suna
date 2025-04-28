@@ -8,11 +8,11 @@ export function CTACard() {
     <div className="flex flex-col space-y-2 py-2 px-1">
       <div className="flex flex-col">
         <span className="text-sm font-medium text-foreground">Enterprise Demo</span>
-        <span className="text-xs text-muted-foreground mt-0.5">AI employees for your company</span>
+        <span className="text-xs text-muted-foreground mt-0.5">Create game in a click for your company</span>
       </div>
       <div className="flex flex-col space-y-2">
         <KortixProcessModal />
-        {/* <Link href="https://cal.com/marko-kraemer/15min" target="_blank" rel="noopener noreferrer">
+        {/* <Link href="https://cal.com/canerdogan/15min" target="_blank" rel="noopener noreferrer">
           <Button 
             variant="outline" 
             size="sm" 
@@ -26,7 +26,7 @@ export function CTACard() {
       
       <div className="flex items-center mt-1">
         <Link 
-          href="https://www.kortix.ai/careers" 
+          href="https://gamebyte.ai/careers" 
           target="_blank" 
           rel="noopener noreferrer"
           className="flex items-center text-xs text-muted-foreground hover:text-foreground transition-colors"

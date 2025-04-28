@@ -421,6 +421,17 @@ export const getMessages = async (threadId: string): Promise<Message[]> => {
   return data || [];
 };
 
+// Thread deletion API
+export const deleteThread = async (threadId: string): Promise<void> => {
+  const supabase = createClient();
+  const { error } = await supabase
+    .from('threads')
+    .delete()
+    .eq('thread_id', threadId);
+
+  if (error) throw error;
+};
+
 // Agent APIs
 export const startAgent = async (
   threadId: string, 
@@ -1106,4 +1117,3 @@ export const initiateAgent = async (formData: FormData): Promise<InitiateAgentRe
     throw error;
   }
 };
-

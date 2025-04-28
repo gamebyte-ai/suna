@@ -1,11 +1,11 @@
 export const siteConfig = {
-  name: "Kortix Suna",
-  url: "https://suna.so/",
-  description: "Kortix AI",
+  name: "GameByte",
+  url: "https://gamebyte.ai/",
+  description: "GameByte AI",
   links: {
-    twitter: "https://x.com/kortixai",
-    github: "https://github.com/kortix-ai/",
-    linkedin: "https://www.linkedin.com/company/kortix/",
+    twitter: "https://x.com/gamebyte_ai",
+    github: "https://github.com/gamebyte-ai",
+    linkedin: "https://www.linkedin.com/company/gamebyte-ai/",
   },
 };
 

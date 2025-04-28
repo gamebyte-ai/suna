@@ -152,7 +152,7 @@ export function PricingAlert({ open, onOpenChange, closeable = true, accountId }
                           <span className="text-xs text-muted-foreground">No usage limitations</span>
                         </div>
                         <Link 
-                          href="https://github.com/kortix-ai/suna" 
+                          href="https://github.com/gamebyte-ai/" 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="h-10 w-full flex items-center justify-center gap-2 text-sm font-normal tracking-wide rounded-full px-4 cursor-pointer transition-all ease-out active:scale-95 bg-secondary/10 text-secondary shadow-[0px_1px_2px_0px_rgba(255,255,255,0.16)_inset,0px_3px_3px_-1.5px_rgba(16,24,40,0.24),0px_1px_1px_-0.5px_rgba(16,24,40,0.20)]"

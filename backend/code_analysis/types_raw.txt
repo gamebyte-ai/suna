@@ -1,0 +1,464 @@
+## ActiveJobsProvider (agent/tools/data_providers/ActiveJobsProvider.py)
+
+**Class:** `ActiveJobsProvider(RapidDataProviderBase)`
+
+### Constructor
+```python
+def __init__(self)
+```
+- No explicit parameter type hints (except self)
+- **Attributes:**
+    - `endpoints: Dict[str, EndpointSchema]` (local variable)
+    - Inherits `base_url: str`, `endpoints: Dict[str, EndpointSchema]` from base
+
+---
+
+## LinkedinProvider (agent/tools/data_providers/LinkedinProvider.py)
+
+**Class:** `LinkedinProvider(RapidDataProviderBase)`
+
+### Constructor
+```python
+def __init__(self)
+```
+- No explicit parameter type hints (except self)
+- **Attributes:**
+    - `endpoints: Dict[str, EndpointSchema]` (local variable)
+    - Inherits `base_url: str`, `endpoints: Dict[str, EndpointSchema]` from base
+
+---
+
+## AmazonProvider (agent/tools/data_providers/AmazonProvider.py)
+
+**Class:** `AmazonProvider(RapidDataProviderBase)`
+
+### Constructor
+```python
+def __init__(self)
+```
+- No explicit parameter type hints (except self)
+- **Attributes:**
+    - `endpoints: Dict[str, EndpointSchema]` (local variable)
+    - Inherits `base_url: str`, `endpoints: Dict[str, EndpointSchema]` from base
+
+---
+
+## YahooFinanceProvider (agent/tools/data_providers/YahooFinanceProvider.py)
+
+**Class:** `YahooFinanceProvider(RapidDataProviderBase)`
+
+### Constructor
+```python
+def __init__(self)
+```
+- No explicit parameter type hints (except self)
+- **Attributes:**
+    - `endpoints: Dict[str, EndpointSchema]` (local variable)
+    - Inherits `base_url: str`, `endpoints: Dict[str, EndpointSchema]` from base
+
+---
+
+## ZillowProvider (agent/tools/data_providers/ZillowProvider.py)
+
+**Class:** `ZillowProvider(RapidDataProviderBase)`
+
+### Constructor
+```python
+def __init__(self)
+```
+- No explicit parameter type hints (except self)
+- **Attributes:**
+    - `endpoints: Dict[str, EndpointSchema]` (local variable)
+    - Inherits `base_url: str`, `endpoints: Dict[str, EndpointSchema]` from base
+
+---
+
+## TwitterProvider (agent/tools/data_providers/TwitterProvider.py)
+
+**Class:** `TwitterProvider(RapidDataProviderBase)`
+
+### Constructor
+```python
+def __init__(self)
+```
+- No explicit parameter type hints (except self)
+- **Attributes:**
+    - `endpoints: Dict[str, EndpointSchema]` (local variable)
+    - Inherits `base_url: str`, `endpoints: Dict[str, EndpointSchema]` from base
+
+---
+
+## RapidDataProviderBase (agent/tools/data_providers/RapidDataProviderBase.py)
+
+**Class:** `RapidDataProviderBase`
+
+### Constructor
+```python
+def __init__(self, base_url: str, endpoints: Dict[str, EndpointSchema])
+```
+- `base_url: str`
+- `endpoints: Dict[str, EndpointSchema]`
+- **Attributes:**
+    - `base_url: str`
+    - `endpoints: Dict[str, EndpointSchema]`
+
+### Methods
+
+#### get_endpoints
+```python
+def get_endpoints(self)
+```
+- **Returns:** `Dict[str, EndpointSchema]`
+
+#### call_endpoint
+```python
+def call_endpoint(self, route: str, payload: Optional[Dict[str, Any]] = None)
+```
+- `route: str`
+- `payload: Optional[Dict[str, Any]]`
+- **Returns:** `dict`
+
+---
+
+## DBConnection (services/supabase.py)
+
+**Class:** `DBConnection`
+
+### Attributes
+- `_instance: Optional[DBConnection]`
+- `_initialized: bool`
+- `_client: Optional[AsyncClient]`
+
+### Methods
+- `def __new__(cls) -> DBConnection`
+- `def __init__(self)`
+- `async def initialize(self)`
+- `@property async def client(self) -> AsyncClient`
+
+---
+
+## Redis Service (services/redis.py)
+
+### Functions
+- `def initialize()`
+- `async def delete(key: str)`
+    - `key: str`
+    - **Returns:** type not specified
+- `async def publish(channel: str, message: str)`
+    - `channel: str`
+    - `message: str`
+- `async def close()`
+
+---
+
+## Billing Utility (utils/billing.py)
+
+### Functions
+- `async def check_billing_status(client, account_id: str) -> Tuple[bool, str, Optional[Dict]]`
+    - `client`: type not specified
+    - `account_id: str`
+    - **Returns:** `Tuple[bool, str, Optional[Dict]]`
+- `async def get_account_id_from_thread(client, thread_id: str) -> Optional[str]`
+    - `client`: type not specified
+    - `thread_id: str`
+    - **Returns:** `Optional[str]`
+
+---
+
+## Configuration (utils/config.py)
+
+**Class:** `Configuration`
+
+### Attributes
+- `ENV_MODE: EnvMode`
+- `OPENAI_API_KEY: Optional[str]`
+- `ANTHROPIC_API_KEY: Optional[str]`
+- `GROQ_API_KEY: Optional[str]`
+- `OPENROUTER_API_KEY: Optional[str]`
+- `OPENROUTER_API_BASE: str`
+- ... (many more, see class for full list)
+
+### Methods
+- `def __init__(self)`
+- `def _load_from_env(self)`
+- `def _validate(self)`
+- `def get(self, key: str, default: Any = None) -> Any`
+- `def as_dict(self) -> Dict[str, Any]`
+
+---
+
+## SandboxFilesTool (agent/tools/sb_files_tool.py)
+
+**Class:** `SandboxFilesTool(SandboxToolsBase)`
+
+### Constructor
+```python
+def __init__(self, project_id: str, thread_manager: ThreadManager)
+```
+- `project_id: str`
+- `thread_manager: ThreadManager`
+
+### Methods
+
+#### clean_path
+```python
+def clean_path(self, path: str) -> str
+```
+- `path: str`
+- **Returns:** `str`
+
+#### _should_exclude_file
+```python
+def _should_exclude_file(self, rel_path: str) -> bool
+```
+- `rel_path: str`
+- **Returns:** `bool`
+
+#### _file_exists
+```python
+def _file_exists(self, path: str) -> bool
+```
+- `path: str`
+- **Returns:** `bool`
+
+#### get_workspace_state
+```python
+async def get_workspace_state(self) -> dict
+```
+- **Returns:** `dict`
+
+#### _ensure_sandbox
+```python
+async def _ensure_sandbox(self) -> Sandbox
+```
+- **Returns:** `Sandbox`
+
+#### _get_preview_url
+```python
+def _get_preview_url(self, file_path: str) -> Optional[str]
+```
+- `file_path: str`
+- **Returns:** `Optional[str]`
+
+#### create_file
+```python
+async def create_file(self, file_path: str, file_contents: str, permissions: str = "644") -> ToolResult
+```
+- `file_path: str`
+- `file_contents: str`
+- `permissions: str` (default: "644")
+- **Returns:** `ToolResult`
+
+#### str_replace
+```python
+async def str_replace(self, file_path: str, old_str: str, new_str: str) -> ToolResult
+```
+- `file_path: str`
+- `old_str: str`
+- `new_str: str`
+- **Returns:** `ToolResult`
+
+#### full_file_rewrite
+```python
+async def full_file_rewrite(self, file_path: str, file_contents: str, permissions: str = "644") -> ToolResult
+```
+- `file_path: str`
+- `file_contents: str`
+- `permissions: str` (default: "644")
+- **Returns:** `ToolResult`
+
+#### delete_file
+```python
+async def delete_file(self, file_path: str) -> ToolResult
+```
+- `file_path: str`
+- **Returns:** `ToolResult`
+
+---
+
+**Note:**
+- All methods with `async` are asynchronous coroutine functions.
+- The file also contains a commented-out `read_file` method with similar type annotations.
+- Types such as `ToolResult`, `Sandbox`, and `ThreadManager` are imported from other modules and are assumed to be defined elsewhere in the codebase.
+
+---
+
+## SandboxShellTool (agent/tools/sb_shell_tool.py)
+
+**Class:** `SandboxShellTool(SandboxToolsBase)`
+
+### Constructor
+```python
+def __init__(self, project_id: str, thread_manager: ThreadManager)
+```
+- `project_id: str`
+- `thread_manager: ThreadManager`
+
+### Methods
+
+#### _ensure_session
+```python
+async def _ensure_session(self, session_name: str = "default") -> str
+```
+- `session_name: str` (default: "default")
+- **Returns:** `str`
+
+#### _cleanup_session
+```python
+async def _cleanup_session(self, session_name: str)
+```
+- `session_name: str`
+- **Returns:** None (no explicit return type)
+
+#### execute_command
+```python
+async def execute_command(
+    self,
+    command: str,
+    folder: Optional[str] = None,
+    session_name: str = "default",
+    timeout: int = 180
+) -> ToolResult
+```
+- `command: str`
+- `folder: Optional[str]` (default: None)
+- `session_name: str` (default: "default")
+- `timeout: int` (default: 180)
+- **Returns:** `ToolResult`
+
+---
+
+**Note:**
+- All methods with `async` are asynchronous coroutine functions.
+- Types such as `ToolResult`, `Sandbox`, and `ThreadManager` are imported from other modules and are assumed to be defined elsewhere in the codebase.
+- The class manages shell command execution, session state, and process management in the sandbox environment.
+
+---
+
+## ToolRegistry (agentpress/tool_registry.py)
+
+**Class:** `ToolRegistry`
+
+### Attributes
+- `tools: Dict[str, Dict[str, Any]]` — OpenAPI-style tools and schemas
+- `xml_tools: Dict[str, Dict[str, Any]]` — XML-style tools and schemas
+
+### Methods
+- `def __init__(self)`
+- `def register_tool(self, tool_class: Type[Tool], function_names: Optional[List[str]] = None, **kwargs)`
+  - `tool_class: Type[Tool]`
+  - `function_names: Optional[List[str]]`
+  - `**kwargs: Any`
+- `def get_available_functions(self) -> Dict[str, Callable]`
+  - **Returns:** `Dict[str, Callable]`
+- `def get_tool(self, tool_name: str) -> Dict[str, Any]`
+  - `tool_name: str`
+  - **Returns:** `Dict[str, Any]`
+- `def get_xml_tool(self, tag_name: str) -> Dict[str, Any]`
+  - `tag_name: str`
+  - **Returns:** `Dict[str, Any]`
+- `def get_openapi_schemas(self) -> List[Dict[str, Any]]`
+  - **Returns:** `List[Dict[str, Any]]`
+- `def get_xml_examples(self) -> Dict[str, Any]`
+  - **Returns:** `Dict[str, Any]`
+
+---
+
+## ContextManager (agentpress/context_manager.py)
+
+**Class:** `ContextManager`
+
+### Attributes
+- `db: DBConnection`
+- `token_threshold: int`
+
+### Methods
+- `def __init__(self, token_threshold: int = DEFAULT_TOKEN_THRESHOLD)`
+  - `token_threshold: int` (default: `DEFAULT_TOKEN_THRESHOLD`)
+- `async def get_thread_token_count(self, thread_id: str) -> int`
+  - `thread_id: str`
+  - **Returns:** `int`
+- `async def get_messages_for_summarization(self, thread_id: str) -> List[Dict[str, Any]]`
+  - `thread_id: str`
+  - **Returns:** `List[Dict[str, Any]]`
+- `async def check_and_summarize_if_needed(self, thread_id: str, add_message_callback, model: str = "gpt-4o-mini", force: bool = False) -> bool`
+  - `thread_id: str`
+  - `add_message_callback: Callable`
+  - `model: str` (default: "gpt-4o-mini")
+  - `force: bool` (default: False)
+  - **Returns:** `bool`
+
+---
+
+## ThreadManager (agentpress/thread_manager.py)
+
+**Class:** `ThreadManager`
+
+### Attributes
+- `db: DBConnection`
+- `tool_registry: ToolRegistry`
+- `response_processor: ResponseProcessor`
+- `context_manager: ContextManager`
+
+### Methods
+- `def __init__(self)`
+- `def add_tool(self, tool_class: Type[Tool], function_names: Optional[List[str]] = None, **kwargs)`
+  - `tool_class: Type[Tool]`
+  - `function_names: Optional[List[str]]`
+  - `**kwargs: Any`
+- `async def add_message(self, thread_id: str, type: str, content: Union[Dict[str, Any], List[Any], str], is_llm_message: bool = False, metadata: Optional[Dict[str, Any]] = None)`
+  - `thread_id: str`
+  - `type: str`
+  - `content: Union[Dict[str, Any], List[Any], str]`
+  - `is_llm_message: bool` (default: False)
+  - `metadata: Optional[Dict[str, Any]]` (default: None)
+- `async def run_thread(self, ...) -> ...` (see code for full signature)
+
+---
+
+## ResponseProcessor (agentpress/response_processor.py)
+
+**Class:** `ResponseProcessor`
+
+### Attributes
+- `tool_registry: ToolRegistry`
+- `add_message: Callable`
+
+### Methods
+- `def __init__(self, tool_registry: ToolRegistry, add_message_callback: Callable)`
+  - `tool_registry: ToolRegistry`
+  - `add_message_callback: Callable`
+- `async def process_streaming_response(self, llm_response: AsyncGenerator, thread_id: str, prompt_messages: List[Dict[str, Any]], llm_model: str, config: ProcessorConfig = ProcessorConfig()) -> AsyncGenerator[Dict[str, Any], None]`
+  - `llm_response: AsyncGenerator`
+  - `thread_id: str`
+  - `prompt_messages: List[Dict[str, Any]]`
+  - `llm_model: str`
+  - `config: ProcessorConfig` (default: ProcessorConfig())
+  - **Returns:** `AsyncGenerator[Dict[str, Any], None]`
+
+---
+
+## ToolExecutionContext (agentpress/response_processor.py)
+
+**Dataclass:** `ToolExecutionContext`
+- `tool_call: Dict[str, Any]`
+- `tool_index: int`
+- `result: Optional[ToolResult] = None`
+- `function_name: Optional[str] = None`
+- `xml_tag_name: Optional[str] = None`
+- `error: Optional[Exception] = None`
+- `assistant_message_id: Optional[str] = None`
+- `parsing_details: Optional[Dict[str, Any]] = None`
+
+---
+
+## ProcessorConfig (agentpress/response_processor.py)
+
+**Dataclass:** `ProcessorConfig`
+- `xml_tool_calling: bool = True`
+- `native_tool_calling: bool = False`
+- `execute_tools: bool = True`
+- `execute_on_stream: bool = False`
+- `tool_execution_strategy: ToolExecutionStrategy = "sequential"`
+- `xml_adding_strategy: XmlAddingStrategy = "assistant_message"`
+- `max_xml_tool_calls: int = 0`

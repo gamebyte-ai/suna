@@ -134,13 +134,17 @@ async def run_agent(
                 print(f"Error parsing browser state: {e}")
                 # print(latest_browser_state.data[0])
         
-        max_tokens = 64000 if "sonnet" in model_name.lower() else None
+        # Convert model_name alias to real model name using centralized config
+        real_model_name = get_model_real_name(model_name)
+        
+        # Determine max tokens based on the real model name
+        max_tokens = 64000 if "sonnet" in real_model_name.lower() else None
 
         response = await thread_manager.run_thread(
             thread_id=thread_id,
             system_prompt=system_message,
             stream=stream,
-            llm_model=model_name,
+            llm_model=real_model_name,  # Use real_model_name for all downstream LLM calls
             llm_temperature=0,
             llm_max_tokens=max_tokens,
             tool_choice="auto",

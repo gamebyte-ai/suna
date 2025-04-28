@@ -9,6 +9,7 @@ import json
 from typing import List, Dict, Any, Optional
 
 from litellm import token_counter, completion, completion_cost
+from utils.llm_config import get_model_real_name
 from services.supabase import DBConnection
 from services.llm import make_llm_api_call
 from utils.logger import logger
@@ -51,7 +52,9 @@ class ContextManager:
             
             # Use litellm's token_counter for accurate model-specific counting
             # This is much more accurate than the SQL-based estimation
-            token_count = token_counter(model="gpt-4", messages=messages)
+            # Use the real model name from config
+            model_name = get_model_real_name("gpt-4")
+            token_count = token_counter(model=model_name, messages=messages)
             
             logger.info(f"Thread {thread_id} has {token_count} tokens (calculated with litellm)")
             return token_count
@@ -145,6 +148,8 @@ class ContextManager:
         messages: List[Dict[str, Any]], 
         model: str = "gpt-4o-mini"
     ) -> Optional[Dict[str, Any]]:
+        # Use the real model name from centralized config
+        real_model = get_model_real_name(model)
         """Generate a summary of conversation messages.
         
         Args:
@@ -189,7 +194,7 @@ THE CONVERSATION HISTORY TO SUMMARIZE IS AS FOLLOWS:
         try:
             # Call LLM to generate summary
             response = await make_llm_api_call(
-                model_name=model,
+                model_name=real_model,
                 messages=[system_message, {"role": "user", "content": "PLEASE PROVIDE THE SUMMARY NOW."}],
                 temperature=0,
                 max_tokens=SUMMARY_TARGET_TOKENS,

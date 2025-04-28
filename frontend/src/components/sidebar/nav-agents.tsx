@@ -34,7 +34,7 @@ import {
   TooltipContent,
   TooltipTrigger
 } from "@/components/ui/tooltip"
-import { getProjects, getThreads, Project } from "@/lib/api"
+import { getProjects, getThreads, deleteThread, Project } from "@/lib/api"
 import Link from "next/link"
 
 // Thread with associated project info for display in sidebar
@@ -181,6 +181,20 @@ export function NavAgents() {
     router.push(url)
   }
 
+  const handleDeleteThread = async (threadId: string, threadUrl: string) => {
+    try {
+      await deleteThread(threadId)
+      setThreads(prev => prev.filter(t => t.threadId !== threadId))
+      toast.success("Agent deleted")
+      if (pathname === threadUrl) {
+        router.push("/dashboard")
+      }
+    } catch (error) {
+      console.error("Error deleting agent:", error)
+      toast.error("Failed to delete agent")
+    }
+  }
+
   return (
     <SidebarGroup>
       <div className="flex justify-between items-center">
@@ -293,7 +307,7 @@ export function NavAgents() {
                           </a>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleDeleteThread(thread.threadId, thread.url)}>
                           <Trash2 className="text-muted-foreground" />
                           <span>Delete</span>
                         </DropdownMenuItem>

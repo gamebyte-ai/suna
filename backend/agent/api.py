@@ -15,6 +15,7 @@ from agentpress.thread_manager import ThreadManager
 from services.supabase import DBConnection
 from services import redis
 from agent.run import run_agent
+from utils.llm_config import get_model_real_name
 from utils.auth_utils import get_current_user_id, get_user_id_from_stream_auth, verify_thread_access
 from utils.logger import logger
 from utils.billing import check_billing_status, get_account_id_from_thread
@@ -30,14 +31,7 @@ instance_id = None # Global instance ID for this backend instance
 # TTL for Redis response lists (24 hours)
 REDIS_RESPONSE_LIST_TTL = 3600 * 24
 
-MODEL_NAME_ALIASES = {
-    "sonnet-3.7": "anthropic/claude-3-7-sonnet-latest",
-    "gpt-4.1": "openai/gpt-4.1-2025-04-14",
-    "gemini-flash-2.5": "openrouter/google/gemini-2.5-flash-preview",
-    "grok-3": "xai/grok-3-fast-latest",
-    "deepseek": "deepseek/deepseek-chat",
-    "grok-3-mini": "xai/grok-3-mini-fast-beta",
-}
+# Model aliases are now handled centrally in utils/llm_config.py
 
 class AgentStartRequest(BaseModel):
     model_name: Optional[str] = "anthropic/claude-3-7-sonnet-latest"
@@ -965,7 +959,8 @@ async def initiate_agent_with_files(
             run_agent_background(
                 agent_run_id=agent_run_id, thread_id=thread_id, instance_id=instance_id,
                 project_id=project_id, sandbox=sandbox,
-                model_name=MODEL_NAME_ALIASES.get(model_name, model_name),
+                # Use the real model name from centralized config
+                model_name=get_model_real_name(model_name),
                 enable_thinking=enable_thinking, reasoning_effort=reasoning_effort,
                 stream=stream, enable_context_manager=enable_context_manager
             )
