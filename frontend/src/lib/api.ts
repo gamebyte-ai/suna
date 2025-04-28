@@ -1,13 +1,30 @@
 import { createClient } from '@/lib/supabase/client';
 
+// Get backend URL from environment variables
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
 
-// Track active streams by agent run ID
+// Set to keep track of agent runs that are known to be non-running
+const nonRunningAgentRuns = new Set<string>();
+// Map to keep track of active EventSource streams
 const activeStreams = new Map<string, EventSource>();
 
-// Track agent runs that have been confirmed as completed or not found
-const nonRunningAgentRuns = new Set<string>();
+// Custom error for billing issues
+export class BillingError extends Error {
+  status: number;
+  detail: { message: string; [key: string]: any }; // Allow other properties in detail
 
+  constructor(status: number, detail: { message: string; [key: string]: any }, message?: string) {
+    super(message || detail.message || `Billing Error: ${status}`);
+    this.name = 'BillingError';
+    this.status = status;
+    this.detail = detail;
+    
+    // Set the prototype explicitly.
+    Object.setPrototypeOf(this, BillingError.prototype);
+  }
+}
+
+// Type Definitions (moved from potential separate file for clarity)
 export type Project = {
   id: string;
   name: string;
@@ -59,6 +76,21 @@ export type ToolCall = {
 export interface InitiateAgentResponse {
   thread_id: string;
   agent_run_id: string;
+}
+
+export interface HealthCheckResponse {
+  status: string;
+  timestamp: string;
+  instance_id: string;
+}
+
+export interface FileInfo {
+  name: string;
+  path: string;
+  is_dir: boolean;
+  size: number;
+  mod_time: string;
+  permissions?: string;
 }
 
 // Project APIs
@@ -426,17 +458,6 @@ export const getMessages = async (threadId: string): Promise<Message[]> => {
   return data || [];
 };
 
-// Thread deletion API
-export const deleteThread = async (threadId: string): Promise<void> => {
-  const supabase = createClient();
-  const { error } = await supabase
-    .from('threads')
-    .delete()
-    .eq('thread_id', threadId);
-
-  if (error) throw error;
-};
-
 // Agent APIs
 export const startAgent = async (
   threadId: string, 
@@ -475,6 +496,25 @@ export const startAgent = async (
     });
     
     if (!response.ok) {
+      // Check for 402 Payment Required first
+      if (response.status === 402) {
+        try {
+          const errorData = await response.json();
+          console.error(`[API] Billing error starting agent (402):`, errorData);
+          // Ensure detail exists and has a message property
+          const detail = errorData?.detail || { message: 'Payment Required' };
+          if (typeof detail.message !== 'string') {
+            detail.message = 'Payment Required'; // Default message if missing
+          }
+          throw new BillingError(response.status, detail);
+        } catch (parseError) {
+          // Handle cases where parsing fails or the structure isn't as expected
+          console.error('[API] Could not parse 402 error response body:', parseError);
+          throw new BillingError(response.status, { message: 'Payment Required' }, `Error starting agent: ${response.statusText} (402)`);
+        }
+      }
+      
+      // Handle other errors
       const errorText = await response.text().catch(() => 'No error details available');
       console.error(`[API] Error starting agent: ${response.status} ${response.statusText}`, errorText);
       throw new Error(`Error starting agent: ${response.statusText} (${response.status})`);
@@ -482,6 +522,11 @@ export const startAgent = async (
     
     return response.json();
   } catch (error) {
+    // Rethrow BillingError instances directly
+    if (error instanceof BillingError) {
+      throw error;
+    }
+    
     console.error('[API] Failed to start agent:', error);
     
     // Provide clearer error message for network errors
@@ -489,6 +534,7 @@ export const startAgent = async (
       throw new Error(`Cannot connect to backend server. Please check your internet connection and make sure the backend is running.`);
     }
     
+    // Rethrow other caught errors
     throw error;
   }
 };
@@ -912,15 +958,6 @@ export const createSandboxFileJson = async (sandboxId: string, filePath: string,
   }
 };
 
-export interface FileInfo {
-  name: string;
-  path: string;
-  is_dir: boolean;
-  size: number;
-  mod_time: string;
-  permissions?: string;
-}
-
 export const listSandboxFiles = async (sandboxId: string, path: string): Promise<FileInfo[]> => {
   try {
     const supabase = createClient();
@@ -1122,3 +1159,220 @@ export const initiateAgent = async (formData: FormData): Promise<InitiateAgentRe
     throw error;
   }
 };
+
+export const checkApiHealth = async (): Promise<HealthCheckResponse> => {
+  try {
+    const response = await fetch(`${API_URL}/health`, {
+      cache: 'no-store',
+    });
+    
+    if (!response.ok) {
+      throw new Error(`API health check failed: ${response.statusText}`);
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error('API health check failed:', error);
+    throw error;
+  }
+};
+
+// Billing API Types
+export interface CreateCheckoutSessionRequest {
+  price_id: string;
+  success_url: string;
+  cancel_url: string;
+}
+
+export interface CreatePortalSessionRequest {
+  return_url: string;
+}
+
+export interface SubscriptionStatus {
+  status: string; // Includes 'active', 'trialing', 'past_due', 'scheduled_downgrade', 'no_subscription'
+  plan_name?: string;
+  price_id?: string; // Added
+  current_period_end?: string; // ISO Date string
+  cancel_at_period_end: boolean;
+  trial_end?: string; // ISO Date string
+  minutes_limit?: number;
+  current_usage?: number;
+  // Fields for scheduled changes
+  has_schedule: boolean;
+  scheduled_plan_name?: string;
+  scheduled_price_id?: string; // Added
+  scheduled_change_date?: string; // ISO Date string - Deprecate? Check backend usage
+  schedule_effective_date?: string; // ISO Date string - Added for consistency
+}
+
+export interface BillingStatusResponse {
+  can_run: boolean;
+  message: string;
+  subscription: {
+    price_id: string;
+    plan_name: string;
+    minutes_limit?: number;
+  };
+}
+
+export interface CreateCheckoutSessionResponse {
+  status: 'upgraded' | 'downgrade_scheduled' | 'checkout_created' | 'no_change' | 'new' | 'updated' | 'scheduled';
+  subscription_id?: string;
+  schedule_id?: string;
+  session_id?: string;
+  url?: string;
+  effective_date?: string;
+  message?: string;
+  details?: {
+    is_upgrade?: boolean;
+    effective_date?: string;
+    current_price?: number;
+    new_price?: number;
+    invoice?: {
+      id: string;
+      status: string;
+      amount_due: number;
+      amount_paid: number;
+    };
+  };
+}
+
+// Billing API Functions
+export const createCheckoutSession = async (request: CreateCheckoutSessionRequest): Promise<CreateCheckoutSessionResponse> => {
+  try {
+    const supabase = createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session?.access_token) {
+      throw new Error('No access token available');
+    }
+
+    const response = await fetch(`${API_URL}/billing/create-checkout-session`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify(request),
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'No error details available');
+      console.error(`Error creating checkout session: ${response.status} ${response.statusText}`, errorText);
+      throw new Error(`Error creating checkout session: ${response.statusText} (${response.status})`);
+    }
+    
+    const data = await response.json();
+    console.log('Checkout session response:', data);
+    
+    // Handle all possible statuses
+    switch (data.status) {
+      case 'upgraded':
+      case 'updated':
+      case 'downgrade_scheduled':
+      case 'scheduled':
+      case 'no_change':
+        return data;
+      case 'new':
+      case 'checkout_created':
+        if (!data.url) {
+          throw new Error('No checkout URL provided');
+        }
+        return data;
+      default:
+        console.warn('Unexpected status from createCheckoutSession:', data.status);
+        return data;
+    }
+  } catch (error) {
+    console.error('Failed to create checkout session:', error);
+    throw error;
+  }
+};
+
+export const createPortalSession = async (request: CreatePortalSessionRequest): Promise<{ url: string }> => {
+  try {
+    const supabase = createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session?.access_token) {
+      throw new Error('No access token available');
+    }
+
+    const response = await fetch(`${API_URL}/billing/create-portal-session`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify(request),
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'No error details available');
+      console.error(`Error creating portal session: ${response.status} ${response.statusText}`, errorText);
+      throw new Error(`Error creating portal session: ${response.statusText} (${response.status})`);
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error('Failed to create portal session:', error);
+    throw error;
+  }
+};
+
+export const getSubscription = async (): Promise<SubscriptionStatus> => {
+  try {
+    const supabase = createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session?.access_token) {
+      throw new Error('No access token available');
+    }
+
+    const response = await fetch(`${API_URL}/billing/subscription`, {
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'No error details available');
+      console.error(`Error getting subscription: ${response.status} ${response.statusText}`, errorText);
+      throw new Error(`Error getting subscription: ${response.statusText} (${response.status})`);
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error('Failed to get subscription:', error);
+    throw error;
+  }
+};
+
+export const checkBillingStatus = async (): Promise<BillingStatusResponse> => {
+  try {
+    const supabase = createClient();
+    const { data: { session } } = await supabase.auth.getSession();
+    
+    if (!session?.access_token) {
+      throw new Error('No access token available');
+    }
+
+    const response = await fetch(`${API_URL}/billing/check-status`, {
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+      },
+    });
+    
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'No error details available');
+      console.error(`Error checking billing status: ${response.status} ${response.statusText}`, errorText);
+      throw new Error(`Error checking billing status: ${response.statusText} (${response.status})`);
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error('Failed to check billing status:', error);
+    throw error;
+  }
+};
+
