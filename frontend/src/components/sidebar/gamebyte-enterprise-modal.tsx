@@ -11,7 +11,7 @@ import Image from "next/image"
 import Cal, { getCalApi } from "@calcom/embed-react"
 import { useTheme } from "next-themes"
 
-export function KortixProcessModal() {
+export function GameByteProcessModal() {
   const [open, setOpen] = useState(false)
   const isDesktop = useMediaQuery("(min-width: 768px)")
   const { resolvedTheme } = useTheme()

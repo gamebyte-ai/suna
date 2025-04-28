@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   authors: [
     {
       name: "GameByte AI Corp",
-      url: "https://kortix.ai",
+      url: "https://gamebyte.ai",
     },
   ],
   creator: "GameByte AI Corp",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    creator: "@kortixai",
+    creator: "@gamebyteai",
   },
   robots: {
     index: true,

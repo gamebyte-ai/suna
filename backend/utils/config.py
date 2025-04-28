@@ -2,7 +2,7 @@
 Configuration management.
 
 This module provides a centralized way to access configuration settings and
-environment variables across the application. It supports different environment
+environment variables across the GameByte application. It supports different environment
 modes (development, staging, production) and provides validation for required
 values.
 
@@ -115,7 +115,7 @@ class Configuration:
     OPENROUTER_API_KEY: Optional[str] = None
     OPENROUTER_API_BASE: Optional[str] = "https://openrouter.ai/api/v1"
     OR_SITE_URL: Optional[str] = None
-    OR_APP_NAME: Optional[str] = "Suna.so"    
+    OR_APP_NAME: Optional[str] = "GameByte.so"    
     
     # AWS Bedrock credentials
     AWS_ACCESS_KEY_ID: Optional[str] = None
@@ -145,7 +145,7 @@ class Configuration:
     TAVILY_API_KEY: str
     RAPID_API_KEY: str
     CLOUDFLARE_API_TOKEN: Optional[str] = None
-    FIRECRAWL_API_KEY: str
+    FIRECRAWL_API_KEY: str = None
     
     # Stripe configuration
     STRIPE_SECRET_KEY: Optional[str] = None

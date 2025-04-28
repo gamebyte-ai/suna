@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { Briefcase, ExternalLink } from "lucide-react"
-import { KortixProcessModal } from "@/components/sidebar/kortix-enterprise-modal"
+import { GameByteProcessModal } from "@/components/sidebar/gamebyte-enterprise-modal"
 
 export function CTACard() {
   return (
     <div className="flex flex-col space-y-2 py-2 px-1">
       <div className="flex flex-col">
-        <span className="text-sm font-medium text-foreground">Enterprise Demo</span>
+        <span className="text-sm font-medium text-foreground">GameByte Demo</span>
         <span className="text-xs text-muted-foreground mt-0.5">Create game in a click for your company</span>
       </div>
       <div className="flex flex-col space-y-2">
-        <KortixProcessModal />
+        <GameByteProcessModal />
         {/* <Link href="https://cal.com/canerdogan/15min" target="_blank" rel="noopener noreferrer">
           <Button 
             variant="outline" 

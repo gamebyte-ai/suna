@@ -29,7 +29,7 @@ export function FooterSection() {
           <Link href="/" className="flex items-center gap-2">
             <Image 
               src={logoSrc} 
-              alt="Kortix Logo" 
+              alt="GameByte Logo" 
               width={122} 
               height={22} 
               priority

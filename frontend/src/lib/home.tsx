@@ -51,7 +51,7 @@ export interface PricingTier {
 export const siteConfig = {
   name: "GameByte",
   description: "The Generalist AI Agent that can act on your behalf.",
-  cta: "Hire Suna",
+  cta: "Hire GameByte",
   url: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   keywords: [
     "AI Agent",
@@ -91,16 +91,16 @@ export const siteConfig = {
     ),
     badge: "100% OPEN SOURCE",
     githubUrl: "https://github.com/gamebyte-ai/",
-    title: "Suna, the AI Employee.",
-    description: "Suna by GameByte – is a generalist AI Agent that acts on your behalf.",
-    inputPlaceholder: "Ask Suna to...",
+    title: "GameByte, the AI Employee.",
+    description: "GameByte by GameByte – is a generalist AI Agent that acts on your behalf.",
+    inputPlaceholder: "Ask GameByte to...",
   },
   cloudPricingItems: [
     {
       name: "Free",
       price: "$0",
       description: "Get started with",
-      buttonText: "Hire Suna",
+      buttonText: "Hire GameByte",
       buttonColor: "bg-secondary text-white",
       isPopular: false,
       hours: "10 min",
@@ -114,7 +114,7 @@ export const siteConfig = {
       name: "Pro",
       price: "$20",
       description: "Everything in Free, plus:",
-      buttonText: "Hire Suna",
+      buttonText: "Hire GameByte",
       buttonColor: "bg-primary text-white dark:text-black",
       isPopular: true,
       hours: "2 hours",
@@ -130,7 +130,7 @@ export const siteConfig = {
       name: "Custom",
       price: "$50",
       description: "Everything in Pro, plus:",
-      buttonText: "Hire Suna",
+      buttonText: "Hire GameByte",
       buttonColor: "bg-secondary text-white",
       isPopular: false,
       hours: "6 hours",
@@ -366,7 +366,7 @@ export const siteConfig = {
         id: 2,
         title: "AI Understanding & Planning",
         content:
-          "Suna analyzes your request, understands the context, and develops a structured plan to complete the task efficiently.",
+          "GameByte analyzes your request, understands the context, and develops a structured plan to complete the task efficiently.",
         image:
           "https://images.unsplash.com/photo-1686170287433-c95faf6d3608?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8fA%3D%3D",
       },
@@ -374,7 +374,7 @@ export const siteConfig = {
         id: 3,
         title: "Autonomous Execution",
         content:
-          "Using its capabilities and integrations, Suna executes the task independently, handling any complexities along the way.",
+          "Using its capabilities and integrations, GameByte executes the task independently, handling any complexities along the way.",
         image:
           "https://images.unsplash.com/photo-1720378042271-60aff1e1c538?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D",
       },
@@ -382,7 +382,7 @@ export const siteConfig = {
         id: 4,
         title: "Results & Learning",
         content:
-          "Suna delivers results and learns from each interaction, continuously improving its performance to better serve your needs.",
+          "GameByte delivers results and learns from each interaction, continuously improving its performance to better serve your needs.",
         image:
           "https://images.unsplash.com/photo-1666882990322-e7f3b8df4f75?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D",
       },
@@ -398,14 +398,14 @@ export const siteConfig = {
         content: <FirstBentoAnimation />,
         title: "Autonomous Task Execution",
         description:
-          "Experience true automation with Suna. Ask your AI Agent to complete tasks, research information, and handle complex workflows with minimal supervision.",
+          "Experience true automation with GameByte. Ask your AI Agent to complete tasks, research information, and handle complex workflows with minimal supervision.",
       },
       {
         id: 2,
         content: <SecondBentoAnimation />,
         title: "Seamless Integrations",
         description:
-          "Connect Suna to your existing tools for a unified workflow. Boost productivity through AI-powered interconnected systems.",
+          "Connect GameByte to your existing tools for a unified workflow. Boost productivity through AI-powered interconnected systems.",
       },
       {
         id: 3,
@@ -419,21 +419,21 @@ export const siteConfig = {
         ),
         title: "Intelligent Data Analysis",
         description:
-          "Transform raw data into actionable insights in seconds. Make better decisions with Suna's real-time, adaptive intelligence.",
+          "Transform raw data into actionable insights in seconds. Make better decisions with GameByte's real-time, adaptive intelligence.",
       },
       {
         id: 4,
         content: <FourthBentoAnimation once={false} />,
         title: "Complete Customization",
         description:
-          "Tailor Suna to your specific needs. As an open source solution, you have full control over its capabilities, integrations, and implementation.",
+          "Tailor GameByte to your specific needs. As an open source solution, you have full control over its capabilities, integrations, and implementation.",
       },
     ],
   },
   benefits: [
     {
       id: 1,
-      text: "Automate everyday tasks with Suna's powerful AI capabilities.",
+      text: "Automate everyday tasks with GameByte's powerful AI capabilities.",
       image: "/Device-6.png",
     },
     {
@@ -443,7 +443,7 @@ export const siteConfig = {
     },
     {
       id: 3,
-      text: "Improve focus on high-value work as Suna handles the routine.",
+      text: "Improve focus on high-value work as GameByte handles the routine.",
       image: "/Device-8.png",
     },
     {
@@ -749,7 +749,7 @@ export const siteConfig = {
 
         title: "Community Powered",
         description:
-          "Join a thriving community of developers and users continuously enhancing and expanding Suna's capabilities.",
+          "Join a thriving community of developers and users continuously enhancing and expanding GameByte's capabilities.",
       },
     ],
   },
@@ -780,7 +780,7 @@ export const siteConfig = {
           "Community support",
         ],
         description: "Perfect for individual users and developers",
-        buttonText: "Hire Suna",
+        buttonText: "Hire GameByte",
         buttonColor: "bg-accent text-primary",
         isPopular: false,
       },
@@ -1052,7 +1052,7 @@ export const siteConfig = {
       },
       {
         id: 4,
-        question: "Can I integrate Suna with my existing tools?",
+        question: "Can I integrate GameByte with my existing tools?",
         answer:
           "Yes, GameByte is designed to be highly compatible with popular tools and platforms. We offer APIs and pre-built integrations for seamless connection with your existing workflow tools and systems.",
       },
@@ -1060,7 +1060,7 @@ export const siteConfig = {
         id: 5,
         question: "How can I contribute to GameByte?",
         answer:
-          "You can contribute to GameByte by submitting pull requests on GitHub, reporting bugs, suggesting new features, or helping with documentation. Join our Discord community to connect with other contributors and Hire Suna.",
+          "You can contribute to GameByte by submitting pull requests on GitHub, reporting bugs, suggesting new features, or helping with documentation. Join our Discord community to connect with other contributors and Hire GameByte.",
       },
       {
         id: 6,
