@@ -40,11 +40,11 @@ export const siteConfig = {
     "Autonomous Agent",
   ],
   links: {
-    email: "support@kortix.ai",
+    email: "support@gamebyte.ai",
     twitter: "https://x.com/gamebyte_ai",
-    discord: "https://discord.gg/kortixai",
+    discord: "https://discord.gg/gamebyteai",
     github: "https://github.com/gamebyte-ai/",
-    instagram: "https://instagram.com/kortixai",
+    instagram: "https://instagram.com/gamebyteai",
   },
   nav: {
     links: [
@@ -72,7 +72,7 @@ export const siteConfig = {
     badge: "100% OPEN SOURCE",
     githubUrl: "https://github.com/gamebyte-ai/",
     title: "Suna, the AI Employee.",
-    description: "Suna by Kortix – is a generalist AI Agent that acts on your behalf.",
+    description: "Suna by GameByte – is a generalist AI Agent that acts on your behalf.",
     inputPlaceholder: "Ask Suna to...",
   },
   cloudPricingItems: [
@@ -1056,18 +1056,18 @@ export const siteConfig = {
     title: "Start Using GameByte Today",
     backgroundImage: "/holo.png",
     button: {
-      text: "Hire Suna today",
+      text: "Hire Gamebyte today",
       href: "/auth",
     },
     subtext: "The generalist AI Agent that acts on your behalf",
   },
   footerLinks: [
     {
-      title: "Kortix",
+      title: "GameByte",
       links: [
-        { id: 1, title: "About", url: "https://kortix.ai" },
-        { id: 3, title: "Contact", url: "mailto:hey@kortix.ai" },
-        { id: 4, title: "Careers", url: "https://kortix.ai/careers" },
+        { id: 1, title: "About", url: "https://gamebyte.ai" },
+        { id: 3, title: "Contact", url: "mailto:hey@gamebyte.ai" },
+        { id: 4, title: "Careers", url: "https://gamebyte.ai/careers" },
       ],
     },
     {
