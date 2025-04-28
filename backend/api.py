@@ -23,7 +23,7 @@ load_dotenv()
 # Initialize managers
 db = DBConnection()
 thread_manager = None
-instance_id = str(uuid.uuid4())[:8]  # Generate instance ID at module load time
+instance_id = "single"
 
 # Rate limiter state
 ip_tracker = OrderedDict()
@@ -70,7 +70,9 @@ async def lifespan(app: FastAPI):
         
         # Clean up Redis connection
         try:
+            logger.info("Closing Redis connection")
             await redis.close()
+            logger.info("Redis connection closed successfully")
         except Exception as e:
             logger.error(f"Error closing Redis connection: {e}")
         
@@ -104,46 +106,6 @@ async def log_requests_middleware(request: Request, call_next):
         process_time = time.time() - start_time
         logger.error(f"Request failed: {method} {path} | Error: {str(e)} | Time: {process_time:.2f}s")
         raise
-
-# @app.middleware("http")
-# async def throw_error_middleware(request: Request, call_next):
-#     client_ip = request.client.host
-#     if client_ip != "109.49.168.102":
-#         logger.warning(f"Request blocked from IP {client_ip} to {request.method} {request.url.path}")
-#         return JSONResponse(
-#             status_code=403,
-#             content={"error": "Request blocked", "message": "Test DDoS protection"}
-#         )
-#     return await call_next(request)
-
-# @app.middleware("http")
-# async def rate_limit_middleware(request: Request, call_next):
-#     global ip_tracker
-#     client_ip = request.client.host
-    
-#     # Clean up old entries (older than 5 minutes)
-#     current_time = time.time()
-#     ip_tracker = OrderedDict((ip, ts) for ip, ts in ip_tracker.items() 
-#                            if current_time - ts < 300)
-    
-#     # Check if IP is already tracked
-#     if client_ip in ip_tracker:
-#         ip_tracker[client_ip] = current_time
-#         return await call_next(request)
-    
-#     # Check if we've hit the limit
-#     if len(ip_tracker) >= MAX_CONCURRENT_IPS:
-#         logger.warning(f"Rate limit exceeded. Current IPs: {len(ip_tracker)}")
-#         return JSONResponse(
-#             status_code=429,
-#             content={"error": "Too many concurrent connections", 
-#                     "message": "Maximum number of concurrent connections reached"}
-#         )
-    
-#     # Add new IP
-#     ip_tracker[client_ip] = current_time
-#     logger.info(f"New connection from IP {client_ip}. Total connections: {len(ip_tracker)}")
-#     return await call_next(request)
 
 # Define allowed origins based on environment
 allowed_origins = ["https://www.suna.so", "https://suna.so", "https://staging.suna.so", "http://localhost:3000"]
