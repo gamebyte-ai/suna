@@ -2,7 +2,7 @@
 Configuration management.
 
 This module provides a centralized way to access configuration settings and
-environment variables across the GameByte application. It supports different environment
+environment variables across the application. It supports different environment
 modes (development, staging, production) and provides validation for required
 values.
 
@@ -114,8 +114,8 @@ class Configuration:
     GROQ_API_KEY: Optional[str] = None
     OPENROUTER_API_KEY: Optional[str] = None
     OPENROUTER_API_BASE: Optional[str] = "https://openrouter.ai/api/v1"
-    OR_SITE_URL: Optional[str] = None
-    OR_APP_NAME: Optional[str] = "GameByte.so"    
+    OR_SITE_URL: Optional[str] = "https://kortix.ai"
+    OR_APP_NAME: Optional[str] = "Kortix AI"    
     
     # AWS Bedrock credentials
     AWS_ACCESS_KEY_ID: Optional[str] = None
@@ -145,7 +145,8 @@ class Configuration:
     TAVILY_API_KEY: str
     RAPID_API_KEY: str
     CLOUDFLARE_API_TOKEN: Optional[str] = None
-    FIRECRAWL_API_KEY: str = None
+    FIRECRAWL_API_KEY: str
+    FIRECRAWL_URL: Optional[str] = "https://api.firecrawl.dev"
     
     # Stripe configuration
     STRIPE_SECRET_KEY: Optional[str] = None
@@ -154,9 +155,18 @@ class Configuration:
     STRIPE_DEFAULT_TRIAL_DAYS: int = 14
     
     # Stripe Product IDs
-    STRIPE_PRODUCT_ID_PROD: str = 'prod_SCl7AQ2C8kK1CD'  # Production product ID
-    STRIPE_PRODUCT_ID_STAGING: str = 'prod_SCgIj3G7yPOAWY'  # Staging product ID
+    STRIPE_PRODUCT_ID_PROD: str = 'prod_SCl7AQ2C8kK1CD'
+    STRIPE_PRODUCT_ID_STAGING: str = 'prod_SCgIj3G7yPOAWY'
     
+    # Sandbox configuration
+    SANDBOX_IMAGE_NAME = "kortix/suna:0.1.3"
+    SANDBOX_ENTRYPOINT = "/usr/bin/supervisord -n -c /etc/supervisor/conf.d/supervisord.conf"
+
+    # LangFuse configuration
+    LANGFUSE_PUBLIC_KEY: Optional[str] = None
+    LANGFUSE_SECRET_KEY: Optional[str] = None
+    LANGFUSE_HOST: str = "https://cloud.langfuse.com"
+
     @property
     def STRIPE_PRODUCT_ID(self) -> str:
         if self.ENV_MODE == EnvMode.STAGING:
